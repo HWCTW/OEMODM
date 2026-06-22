@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑沃咖啡 | 專屬客製化掛耳咖啡</title>
+    <style>
+        /* CSS 變數定義：黑沃精品風格 */
+        :root {
+            --hwc-black: #111111;
+            --hwc-dark: #1a1a1a;
+            --hwc-gold: #c69c6d;
+            --hwc-gold-hover: #b38959;
+            --hwc-white: #f8f8f8;
+            --hwc-gray: #777777;
+            --hwc-border: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+        }
+
+        body {
+            background-color: var(--hwc-black);
+            color: var(--hwc-white);
+            line-height: 1.6;
+        }
+
+        /* 標題與版頭區塊 */
+        header {
+            background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.9)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+            padding: 100px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--hwc-gold);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--hwc-gold);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #dddddd;
+        }
+
+        /* 內容區塊 */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--hwc-gold);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--hwc-border);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 25px;
+            background-color: var(--hwc-gold);
+            margin-right: 15px;
+        }
+
+        /* 互動表單卡片 */
+        .interactive-card {
+            background-color: var(--hwc-dark);
+            border: 1px solid var(--hwc-border);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label.step-title {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--hwc-gold);
+            border-bottom: 1px dashed var(--hwc-border);
+            padding-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            background-color: #222;
+            border: 1px solid var(--hwc-border);
+            color: white;
+            font-size: 1.1rem;
+            border-radius: 4px;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--hwc-gold);
+        }
+
+        .help-text {
+            font-size: 0.85rem;
+            color: var(--hwc-gray);
+            margin-top: 5px;
+        }
+
+        /* 選擇按鈕 (Radio Buttons) 樣式 - 共用 */
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+        .radio-option input {
+            display: none;
+        }
+
+        .radio-label {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            padding: 20px 15px;
+            background-color: #222;
+            border: 1px solid var(--hwc-border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .radio-label h4 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .radio-label p {
+            font-size: 0.85rem;
+            color: var(--hwc-gray);
+            margin-bottom: 5px;
+        }
+
+        .radio-option input:checked + .radio-label {
+            border-color: var(--hwc-gold);
+            background-color: rgba(198, 156, 109, 0.1);
+            box-shadow: 0 0 10px rgba(198, 156, 109, 0.2);
+        }
+
+        /* 風味專屬標籤樣式 */
+        .flavor-tags {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .f-tag {
+            font-size: 0.7rem;
+            background: #333;
+            color: #ccc;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .f-notes {
+            color: var(--hwc-gold);
+            font-size: 0.8rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* 價格試算區塊 */
+        .calculation-result {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            border: 1px solid var(--hwc-gold);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .calc-row.highlight {
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .calc-row.total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--hwc-gray);
+            font-size: 1.6rem;
+            color: var(--hwc-gold);
+            font-weight: bold;
+        }
+
+        .free-tag {
+            color: #4CAF50;
+            font-size: 0.85rem;
+            margin-left: 10px;
+        }
+
+        .unit-price-tag {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* 靜態資訊列表 */
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .info-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--hwc-gold);
+            font-weight: bold;
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #0a0a0a;
+            border-top: 1px solid var(--hwc-border);
+            margin-top: 50px;
+        }
+        
+        .cta-btn {
+            background-color: var(--hwc-gold);
+            color: var(--hwc-black);
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--hwc-gold-hover);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>黑沃咖啡 HWC ROASTERS</h1>
+        <p>專屬客製化掛耳咖啡設計，滿足品牌與個人化需求。<br>無論是獨特的風味組合，還是專屬包裝，讓每一個細節都展現您的專屬風格。</p>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">客製化需求即時試算</h2>
+        <div class="interactive-card">
+            
+            <div class="form-group">
+                <label class="step-title" for="order-qty">1. 訂購數量 (包)</label>
+                <input type="number" id="order-qty" min="1" value="5000" step="100">
+                <p class="help-text">※ 輸入數量將自動對應專屬單價級距，並判斷是否達免設計費門檻。</p>
+            </div>
+
+            <div class="form-group">
+                <label class="step-title">2. 咖啡風味選擇</label>
+                <div class="radio-group">
+                    
+                    <div class="radio-option">
+                        <input type="radio" name="flavor-type" id="f-1" value="A" checked>
+                        <label class="radio-label" for="f-1">
+                            <h4>01 黑沃中深焦糖</h4>
+                            <div class="flavor-tags"><span class="f-tag">中深焙</span><span class="f-tag">水洗</span></div>
+                            <div class="f-notes">巧克力.焦糖.果仁.奶油</div>
+                        </label>
+                    </div>
+                    
+                    <div class="radio-option">
+                        <input type="radio" name="flavor-type" id="f-2" value="A">
+                        <label class="radio-label" for="f-2">
+                            <h4>02 黑沃中深堅果</h4>
+                            <div class="flavor-tags"><span class="f-tag">中深焙</span><span class="f-tag">濕刨.日曬</span></div>
+                            <div class="f-notes">巧克力.榛果.杏仁.香草</div>
+                        </label>
+                    </div>
+
+                    <div class="radio-option">
+                        <input type="radio" name="flavor-type" id="f-3" value="A">
+                        <label class="radio-label" for="f-3">
+                            <h4>03 黑沃深焙可可</h4>
+                            <div class="flavor-tags"><span class="f-tag">深焙</span><span class="f-tag">日曬</span></div>
+                            <div class="f-notes">黑巧克力.可可豆.奶油.香草</div>
+                        </label>
+                    </div>
+
+                    <div class="radio-option">
+                        <input type="radio" name="flavor-type" id="f-4" value="A">
+                        <label class="radio-label" for="f-4">
+                            <h4>04 黑沃草莓</h4>
+                            <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">水洗.特殊發酵</span></div>
+                            <div class="f-notes">野草莓.葡萄.蘋果.紅櫻桃</div>
+                        </label>
+                    </div>
+
+                    <div class="radio-option">
+                        <input type="radio" name="flavor-type" id="f-5" value="A">
+                        <label class="radio-label" for="f-5">
+                            <h4>05 黑沃水蜜桃</h4>
+                            <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬.特殊發酵</span></div>
+                            <div class="f-notes">水蜜桃.杏桃.荔枝.無花果</div>
+                        </label>
+                    </div>
+
+                    <div class="radio-option">
+                        <input type="radio" name="flavor-type" id="f-6" value="A">
+                        <label class="radio-label" for="f-6">
+                            <h4>06 黑沃荔香</h4>
+                            <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬.特殊發酵</span></div>
+                            <div class="f-notes">荔枝.熱帶水果.檸檬.烏龍茶</div>
+                        </label>
+                    </div>
+
+                    <div class="radio-option">
+                        <input type="radio" name="flavor-type" id="f-7" value="B">
+                        <label class="radio-label" for="f-7">
+                            <h4>07 黑沃花香</h4>
+                            <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬</span></div>
+                            <div class="f-notes">茉莉花.甜檸檬.柑橘.熱帶水果</div>
+                        </label>
+                    </div>
+
+                    <div class="radio-option">
+                        <input type="radio" name="flavor-type" id="f-8" value="B">
+                        <label class="radio-label" for="f-8">
+                            <h4>08 黑沃酒香藝伎</h4>
+                            <div class="flavor-tags"><span class="f-tag">中焙</span><span class="f-tag">日曬.厭氧日曬</span></div>
+                            <div class="f-notes">葡萄酒.櫻桃.覆盆子.巧克力</div>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="step-title">3. 包裝及附加需求 (費用另計，請勾選備註)</label>
+                <div style="display: flex; gap: 20px; margin-top: 10px;">
+                    <label style="color: white; font-weight: normal; cursor: pointer;"><input type="checkbox" id="need-box"> 需附禮盒與協助入盒</label>
+                    <label style="color: white; font-weight: normal; cursor: pointer;"><input type="checkbox" id="need-bag"> 需附提袋</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="step-title">4. 設計需求選擇</label>
+                <div class="radio-group" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div class="radio-option">
+                        <input type="radio" name="design-type" id="design-1" value="1" checked>
+                        <label class="radio-label" for="design-1" style="text-align: center;">
+                            <h4>買方提供設計檔</h4>
+                            <p>黑沃協助套版與發包製作</p>
+                            <p style="color:var(--hwc-gold); margin-top:5px;">免工本費</p>
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="design-type" id="design-2" value="2">
+                        <label class="radio-label" for="design-2" style="text-align: center;">
+                            <h4>買方提供散素材</h4>
+                            <p>黑沃協助套版</p>
+                            <p style="color:var(--hwc-gold); margin-top:5px;">NT$500工本費 / 滿3千包免費</p>
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="design-type" id="design-3" value="3">
+                        <label class="radio-label" for="design-3" style="text-align: center;">
+                            <h4>套用黑沃公版</h4>
+                            <p>黑沃協助套版</p>
+                            <p style="color:var(--hwc-gold); margin-top:5px;">NT$200工本費 / 滿3千包免費</p>
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="design-type" id="design-4" value="4">
+                        <label class="radio-label" for="design-4" style="text-align: center;">
+                            <h4>黑沃協助完整設計</h4>
+                            <p>專屬設計與素材構思</p>
+                            <p style="color:var(--hwc-gold); margin-top:5px;">NT$1,000設計費 / 滿1萬包免費</p>
+                        </label>
+                    </div>
+                </div>
+                <p class="help-text" style="margin-top: 10px;">※若選擇完整設計，無提供改稿；若需改稿，每次酌收NT$500。</p>
+            </div>
+
+            <div class="calculation-result">
+                <h3 style="margin-bottom: 15px; color: var(--hwc-gold);">總費用試算預估</h3>
+                
+                <div class="calc-row highlight">
+                    <span>咖啡本體 
+                        <span class="unit-price-tag" id="coffee-detail">(@$18 x 5000包)</span>
+                    </span>
+                    <span id="coffee-total-display">NT$ 90,000</span>
+                </div>
+                
+                <div class="calc-row">
+                    <span>基本版費 (發包廠商)</span>
+                    <span>NT$ 1,000</span>
+                </div>
+                
+                <div class="calc-row">
+                    <span>設計/工本費 <span id="free-notice" class="free-tag"></span></span>
+                    <span id="design-fee-display">NT$ 0</span>
+                </div>
+                
+                <div class="calc-row total">
+                    <span>預估總計</span>
+                    <span id="total-fee-display">NT$ 91,000</span>
+                </div>
+                
+                <p class="help-text" style="text-align: right; margin-top: 10px;">
+                    * 此為線上初步估算，實際總價含運費、禮盒/提袋附加需求等，將由專員為您正式報價。
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-title">製程與出貨說明</h2>
+        <div class="interactive-card">
+            <ul class="info-list">
+                <li><strong>製作時程：</strong>設計確稿並完成付款後，即安排生產，約 <strong>30-45 個工作天</strong>。</li>
+                <li><strong>付款方式：</strong>一次付清。</li>
+                <li><strong>發票與寄件資訊：</strong>
+                    <br>需提供發票形式、統編、抬頭。
+                    <br>需提供公司名稱、收件人、電話、收件地址及預計出貨日。
+                </li>
+                <li><strong>備註事項：</strong>因大批量生產會有預留數量，超出部分將由買方吸收付款。</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <footer>
+        <h2 style="color: var(--hwc-gold); margin-bottom: 20px;">打造專屬的咖啡體驗</h2>
+        <p style="max-width: 600px; margin: 0 auto 30px; color: #aaa;">
+            選擇黑沃咖啡的客製化掛耳包，特別適合企業送禮、節慶禮盒、活動伴手禮。<br>
+            黑沃專業設計團隊將協助您精準傳達創意與價值，讓品牌理念深入人心。
+        </p>
+        <a href="#" class="cta-btn" onclick="alert('此為展示按鈕，將連結至客服或LINE官方帳號。')">立即開啟客製化之旅</a>
+        <p class="help-text" style="margin-top: 20px;">© 2026 HWC ROASTERS 黑沃咖啡版權所有</p>
+    </footer>
+
+    <script>
+        // DOM 元素選取
+        const qtyInput = document.getElementById('order-qty');
+        const flavorOptions = document.getElementsByName('flavor-type');
+        const designOptions = document.getElementsByName('design-type');
+        
+        const coffeeDetailDisplay = document.getElementById('coffee-detail');
+        const coffeeTotalDisplay = document.getElementById('coffee-total-display');
+        const designFeeDisplay = document.getElementById('design-fee-display');
+        const totalFeeDisplay = document.getElementById('total-fee-display');
+        const freeNotice = document.getElementById('free-notice');
+
+        function calculateFees() {
+            // 1. 取得數量
+            let qty = parseInt(qtyInput.value) || 0;
+            if (qty < 1) qty = 1; // 防呆機制，最低算1包
+
+            // 2. 判斷所選咖啡風味群組 (A群：一般價, B群：花香/藝伎特殊價)
+            let flavorGroup = 'A';
+            for (const option of flavorOptions) {
+                if (option.checked) {
+                    flavorGroup = option.value;
+                    break;
+                }
+            }
+
+            // 3. 計算咖啡單價 (依據階梯式報價表)
+            let unitPrice = 0;
+            if (qty < 1000) {
+                unitPrice = (flavorGroup === 'B') ? 40 : 35;
+            } else if (qty < 2000) {
+                unitPrice = (flavorGroup === 'B') ? 30 : 25;
+            } else if (qty < 5000) {
+                unitPrice = (flavorGroup === 'B') ? 25 : 20;
+            } else if (qty < 10000) {
+                unitPrice = (flavorGroup === 'B') ? 23 : 18;
+            } else { // 10000包以上
+                unitPrice = (flavorGroup === 'B') ? 20 : 16;
+            }
+
+            // 咖啡總金額
+            let coffeeTotal = unitPrice * qty;
+
+            // 4. 計算設計費與門檻
+            let selectedDesign = 1;
+            for (const option of designOptions) {
+                if (option.checked) {
+                    selectedDesign = parseInt(option.value);
+                    break;
+                }
+            }
+
+            const basePlateFee = 1000;
+            let designFee = 0;
+            let isFree = false;
+
+            switch (selectedDesign) {
+                case 1: // 買方提供設計檔
+                    designFee = 0;
+                    break;
+                case 2: // 買方提供散素材 (滿3000免收500)
+                    if (qty >= 3000) { designFee = 0; isFree = true; } 
+                    else { designFee = 500; }
+                    break;
+                case 3: // 套用黑沃公版 (滿3000免收200)
+                    if (qty >= 3000) { designFee = 0; isFree = true; } 
+                    else { designFee = 200; }
+                    break;
+                case 4: // 黑沃協助完整設計 (滿10000免收1000)
+                    if (qty >= 10000) { designFee = 0; isFree = true; } 
+                    else { designFee = 1000; }
+                    break;
+            }
+
+            // 5. 總計加總
+            let finalTotal = coffeeTotal + basePlateFee + designFee;
+
+            // 更新畫面資料
+            coffeeDetailDisplay.textContent = `(@$${unitPrice} x ${qty}包)`;
+            coffeeTotalDisplay.textContent = `NT$ ${coffeeTotal.toLocaleString()}`;
+            designFeeDisplay.textContent = `NT$ ${designFee.toLocaleString()}`;
+            totalFeeDisplay.textContent = `NT$ ${finalTotal.toLocaleString()}`;
+            
+            if (isFree) {
+                freeNotice.textContent = "(已達數量，享免設計/工本費優惠！)";
+            } else {
+                freeNotice.textContent = "";
+            }
+        }
+
+        // 綁定事件監聽器，即時運算
+        qtyInput.addEventListener('input', calculateFees);
+        flavorOptions.forEach(option => option.addEventListener('change', calculateFees));
+        designOptions.forEach(option => option.addEventListener('change', calculateFees));
+
+        // 頁面載入時先執行一次
+        calculateFees();
+    </script>
+</body>
+</html>
