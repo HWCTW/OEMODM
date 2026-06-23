@@ -8,19 +8,18 @@
         /* CSS 變數：高質感白底明亮風格 */
         :root {
             --hwc-gold: #c69c6d;
-            --hwc-gold-dark: #b38959; /* 白底上加深一點的金色，提升對比度 */
-            --bg-body: #f8f9fa; /* 網頁底色：極淺灰，襯托卡片的白 */
-            --bg-card: #ffffff; /* 卡片底色：純白 */
-            --text-main: #222222; /* 主要文字：深灰接近黑 */
-            --text-muted: #666666; /* 說明文字：中灰 */
-            --border-light: #e0e0e0; /* 邊框：淺灰 */
-            --bg-subtle: #f0f0f0; /* 按鈕/標籤的淺灰底 */
+            --hwc-gold-dark: #b38959;
+            --bg-body: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-main: #222222;
+            --text-muted: #666666;
+            --border-light: #e0e0e0;
+            --bg-subtle: #f0f0f0;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
         body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
 
-        /* 版頭區塊：改為半透明白底漸層，透出隱約的背景圖 */
         header {
             background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.95)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
             padding: 80px 20px; text-align: center; border-bottom: 3px solid var(--hwc-gold);
@@ -43,14 +42,19 @@
             background-color: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; 
             padding: 20px 15px; transition: all 0.3s; display: flex; flex-direction: column; justify-content: space-between;
         }
-        /* 選中狀態樣式：白色中透出微金色的質感 */
         .flavor-card.active { border-color: var(--hwc-gold); background-color: rgba(198, 156, 109, 0.05); box-shadow: 0 0 12px rgba(198, 156, 109, 0.15); }
         
         .flavor-info h4 { color: var(--text-main); margin-bottom: 8px; font-size: 1.1rem; }
-        .flavor-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+        .flavor-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
         .f-tag { font-size: 0.75rem; background: var(--bg-subtle); color: var(--text-muted); padding: 3px 8px; border-radius: 4px; }
         .flavor-card.active .f-tag { background: rgba(198, 156, 109, 0.15); color: var(--hwc-gold-dark); font-weight: bold; }
-        .f-notes { color: var(--hwc-gold-dark); font-size: 0.85rem; font-weight: 500; min-height: 40px; }
+        
+        /* 產地與風味描述樣式 */
+        .f-details { font-size: 0.85rem; line-height: 1.5; margin-top: 5px; }
+        .f-details .f-row { margin-bottom: 4px; display: flex; }
+        .f-details .f-label { color: var(--text-main); font-weight: bold; flex-shrink: 0; }
+        .f-details .f-origin { color: var(--text-muted); }
+        .f-details .f-notes { color: var(--hwc-gold-dark); font-weight: 500; }
 
         /* 數量控制器 */
         .flavor-qty-ctrl { margin-top: 15px; }
@@ -61,15 +65,12 @@
         .qty-input { flex: 1; width: 100%; padding: 10px 0; background-color: transparent; border: none; color: var(--text-main); font-size: 1.2rem; text-align: center; font-weight: bold; }
         .qty-input:focus { outline: none; }
 
-        /* 專屬快速按鈕 */
         .flavor-quick-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
         .flavor-quick-btns .q-btn { background-color: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border-light); padding: 8px 0; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
         .flavor-quick-btns .q-btn:hover, .flavor-quick-btns .q-btn:active { border-color: var(--hwc-gold); color: var(--hwc-gold-dark); background-color: rgba(198, 156, 109, 0.1); font-weight: bold; }
 
-        /* 附加需求標籤 */
         .checkbox-label { color: var(--text-main); font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
-        /* 既有設計選項 */
         .radio-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
         .radio-option { position: relative; }
         .radio-option input { display: none; }
@@ -78,7 +79,6 @@
         .radio-label p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
         .radio-option input:checked + .radio-label { border-color: var(--hwc-gold); background-color: rgba(198, 156, 109, 0.05); box-shadow: 0 0 10px rgba(198, 156, 109, 0.15); }
 
-        /* 計算結果表 */
         .calculation-result { background: #fffcf9; border: 2px solid var(--hwc-gold); padding: 25px; border-radius: 10px; margin-top: 30px; }
         .calc-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 1.1rem; color: var(--text-main); }
         .breakdown-container { background: #ffffff; border: 1px solid var(--border-light); padding: 15px; border-radius: 8px; flex-direction: column; align-items: flex-start; }
@@ -115,7 +115,10 @@
                         <div class="flavor-info">
                             <h4>01 黑沃中深焦糖</h4>
                             <div class="flavor-tags"><span class="f-tag">中深焙</span><span class="f-tag">水洗</span></div>
-                            <div class="f-notes">巧克力.焦糖.果仁.奶油</div>
+                            <div class="f-details">
+                                <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">哥倫比亞</span></div>
+                                <div class="f-row"><span class="f-label">風味｜</span><span class="f-notes">巧克力.焦糖.果仁.奶油</span></div>
+                            </div>
                         </div>
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
@@ -138,7 +141,10 @@
                         <div class="flavor-info">
                             <h4>02 黑沃中深堅果</h4>
                             <div class="flavor-tags"><span class="f-tag">中深焙</span><span class="f-tag">濕刨.日曬</span></div>
-                            <div class="f-notes">巧克力.榛果.杏仁.香草</div>
+                            <div class="f-details">
+                                <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">印尼.巴西</span></div>
+                                <div class="f-row"><span class="f-label">風味｜</span><span class="f-notes">巧克力.榛果.杏仁.香草</span></div>
+                            </div>
                         </div>
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
@@ -161,7 +167,10 @@
                         <div class="flavor-info">
                             <h4>03 黑沃深焙可可</h4>
                             <div class="flavor-tags"><span class="f-tag">深焙</span><span class="f-tag">日曬</span></div>
-                            <div class="f-notes">黑巧克力.可可豆.奶油.香草</div>
+                            <div class="f-details">
+                                <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">衣索比亞</span></div>
+                                <div class="f-row"><span class="f-label">風味｜</span><span class="f-notes">黑巧克力.可可豆.奶油.香草</span></div>
+                            </div>
                         </div>
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
@@ -184,7 +193,10 @@
                         <div class="flavor-info">
                             <h4>04 黑沃草莓</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">水洗.特殊發酵</span></div>
-                            <div class="f-notes">野草莓.葡萄.蘋果.紅櫻桃</div>
+                            <div class="f-details">
+                                <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">哥倫比亞.衣索比亞</span></div>
+                                <div class="f-row"><span class="f-label">風味｜</span><span class="f-notes">野草莓.葡萄.蘋果.莓果.紅櫻桃</span></div>
+                            </div>
                         </div>
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
@@ -207,7 +219,10 @@
                         <div class="flavor-info">
                             <h4>05 黑沃水蜜桃</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬.特殊發酵</span></div>
-                            <div class="f-notes">水蜜桃.杏桃.荔枝.無花果</div>
+                            <div class="f-details">
+                                <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">哥倫比亞.衣索比亞</span></div>
+                                <div class="f-row"><span class="f-label">風味｜</span><span class="f-notes">水蜜桃.杏桃.荔枝.無花果.桃花.堅果</span></div>
+                            </div>
                         </div>
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
@@ -228,14 +243,17 @@
 
                     <div class="flavor-card">
                         <div class="flavor-info">
-                            <h4>06 黑沃荔香</h4>
-                            <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬.特殊發酵</span></div>
-                            <div class="f-notes">荔枝.熱帶水果.檸檬.烏龍茶</div>
+                            <h4>06 黑沃花香</h4>
+                            <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬</span></div>
+                            <div class="f-details">
+                                <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">衣索比亞</span></div>
+                                <div class="f-row"><span class="f-label">風味｜</span><span class="f-notes">茉莉花.甜檸檬.柑橘.熱帶水果</span></div>
+                            </div>
                         </div>
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="06 黑沃荔香" data-group="A" value="0">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="06 黑沃花香" data-group="B" value="0">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -251,14 +269,17 @@
 
                     <div class="flavor-card">
                         <div class="flavor-info">
-                            <h4>07 黑沃花香</h4>
-                            <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬</span></div>
-                            <div class="f-notes">茉莉花.甜檸檬.柑橘.熱帶水果</div>
+                            <h4>07 黑沃荔香</h4>
+                            <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬.特殊發酵</span></div>
+                            <div class="f-details">
+                                <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">衣索比亞.哥倫比亞</span></div>
+                                <div class="f-row"><span class="f-label">風味｜</span><span class="f-notes">荔枝.熱帶水果.檸檬.烏龍茶.蜂蜜</span></div>
+                            </div>
                         </div>
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="07 黑沃花香" data-group="B" value="0">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="07 黑沃荔香" data-group="A" value="0">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -276,7 +297,10 @@
                         <div class="flavor-info">
                             <h4>08 黑沃酒香藝伎</h4>
                             <div class="flavor-tags"><span class="f-tag">中焙</span><span class="f-tag">日曬.厭氧日曬</span></div>
-                            <div class="f-notes">葡萄酒.櫻桃.覆盆子.巧克力</div>
+                            <div class="f-details">
+                                <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">衣索比亞.薩爾瓦多</span></div>
+                                <div class="f-row"><span class="f-label">風味｜</span><span class="f-notes">葡萄酒.櫻桃.覆盆子.巧克力.紫羅蘭</span></div>
+                            </div>
                         </div>
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
@@ -349,7 +373,7 @@
                 <h3 style="margin-bottom: 15px; color: var(--hwc-gold-dark); font-weight: bold;">總費用試算預估</h3>
                 
                 <div class="calc-row breakdown-container" id="coffee-breakdown-container">
-                    </div>
+                </div>
                 
                 <div class="calc-row" style="margin-top: 20px;">
                     <span>基本版費 (發包廠商)</span>
@@ -394,11 +418,9 @@
     </footer>
 
     <script>
-        // 取得所有風味輸入框與控制按鈕
         const flavorInputs = document.querySelectorAll('.f-qty');
         const designOptions = document.getElementsByName('design-type');
         
-        // 確保手動輸入只有數字，且限制最低 500 包
         flavorInputs.forEach(input => {
             input.addEventListener('input', function() {
                 this.value = this.value.replace(/[^0-9]/g, '');
@@ -407,7 +429,6 @@
             });
             input.addEventListener('change', function() {
                 let val = parseInt(this.value) || 0;
-                // 若輸入大於0但不滿500，強制調整為最低門檻 500
                 if (val > 0 && val < 500) { val = 500; }
                 this.value = val;
                 updateActiveState(this);
@@ -415,12 +436,10 @@
             });
         });
 
-        // 綁定所有 減號 按鈕
         document.querySelectorAll('.btn-minus').forEach(btn => {
             btn.addEventListener('click', function() {
                 let input = this.nextElementSibling;
                 let val = parseInt(input.value) || 0;
-                // 若小於等於500，再減就歸零；否則每次減100
                 if (val <= 500) { input.value = 0; }
                 else { input.value = val - 100; }
                 updateActiveState(input);
@@ -428,12 +447,10 @@
             });
         });
 
-        // 綁定所有 加號 按鈕
         document.querySelectorAll('.btn-plus').forEach(btn => {
             btn.addEventListener('click', function() {
                 let input = this.previousElementSibling;
                 let val = parseInt(input.value) || 0;
-                // 若為0，加號直接跳最低門檻 500；否則每次加100
                 if (val === 0) { input.value = 500; }
                 else { input.value = val + 100; }
                 updateActiveState(input);
@@ -441,7 +458,6 @@
             });
         });
 
-        // 綁定所有 快速選擇 按鈕
         document.querySelectorAll('.q-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 let input = this.closest('.flavor-qty-ctrl').querySelector('.f-qty');
@@ -451,7 +467,6 @@
             });
         });
 
-        // 更新卡片選中狀態的視覺回饋
         function updateActiveState(input) {
             let card = input.closest('.flavor-card');
             if ((parseInt(input.value) || 0) > 0) {
@@ -461,12 +476,10 @@
             }
         }
 
-        // 核心計算邏輯
         function calculateFees() {
             let totalQty = 0;
             let selectedFlavors = [];
 
-            // 統計所有選擇的風味與數量
             flavorInputs.forEach(input => {
                 let qty = parseInt(input.value) || 0;
                 if (qty > 0) {
@@ -482,7 +495,6 @@
             let coffeeTotal = 0;
             let breakdownHTML = '';
 
-            // 生成咖啡明細表 (白底適配版文字顏色)
             if (selectedFlavors.length > 0) {
                 breakdownHTML += `<div style="font-weight: bold; margin-bottom: 12px; color: var(--text-main);">咖啡明細：</div>`;
                 
@@ -512,7 +524,6 @@
                     </div>
                 `;
             } else {
-                // 若全部歸零
                 breakdownHTML = `
                     <div style="display: flex; justify-content: space-between; width: 100%; color: var(--text-muted);">
                         <span>尚未選擇任何風味 (單一風味最低 500 包)</span>
@@ -523,7 +534,6 @@
 
             document.getElementById('coffee-breakdown-container').innerHTML = breakdownHTML;
 
-            // 計算設計工本費 (使用全部加總數量判斷免設計費門檻)
             let selectedDesign = 1;
             for (const option of designOptions) {
                 if (option.checked) { selectedDesign = parseInt(option.value); break; }
@@ -544,11 +554,11 @@
                         if (totalQty >= 3000) { 
                             designFee = 0; 
                             noticeText = "(總量已達門檻，享免工本費優惠！)";
-                            noticeColor = "#4CAF50"; // 綠色達標
+                            noticeColor = "#4CAF50"; 
                         } else { 
                             designFee = 500; 
                             noticeText = `(還差 ${(3000 - totalQty).toLocaleString()} 包 免工本費)`;
-                            noticeColor = "#e65100"; // 醒目的橘紅色提醒
+                            noticeColor = "#e65100"; 
                         } 
                         break;
                     case 3: 
@@ -576,23 +586,19 @@
                 }
             }
 
-            // 加總總額
             let finalTotal = coffeeTotal + basePlateFee + designFee;
 
             document.getElementById('plate-fee-display').textContent = `NT$ ${basePlateFee.toLocaleString()}`;
             document.getElementById('design-fee-display').textContent = `NT$ ${designFee.toLocaleString()}`;
             document.getElementById('total-fee-display').textContent = `NT$ ${finalTotal.toLocaleString()}`;
             
-            // 更新提示字樣與顏色
             const freeNotice = document.getElementById('free-notice');
             freeNotice.textContent = noticeText;
             freeNotice.style.color = noticeColor;
         }
 
-        // 綁定設計選項變更事件
         designOptions.forEach(option => option.addEventListener('change', calculateFees));
 
-        // 初始執行一次試算
         calculateFees();
     </script>
 </body>
