@@ -5,120 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>黑沃咖啡 | 專屬客製化掛耳咖啡</title>
     <style>
+        /* CSS 變數：高質感白底明亮風格 */
         :root {
-            --hwc-black: #111111;
-            --hwc-dark: #1a1a1a;
             --hwc-gold: #c69c6d;
-            --hwc-gold-hover: #b38959;
-            --hwc-white: #f8f8f8;
-            --hwc-gray: #777777;
-            --hwc-border: #333333;
+            --hwc-gold-dark: #b38959; /* 白底上加深一點的金色，提升對比度 */
+            --bg-body: #f8f9fa; /* 網頁底色：極淺灰，襯托卡片的白 */
+            --bg-card: #ffffff; /* 卡片底色：純白 */
+            --text-main: #222222; /* 主要文字：深灰接近黑 */
+            --text-muted: #666666; /* 說明文字：中灰 */
+            --border-light: #e0e0e0; /* 邊框：淺灰 */
+            --bg-subtle: #f0f0f0; /* 按鈕/標籤的淺灰底 */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
-        body { background-color: var(--hwc-black); color: var(--hwc-white); line-height: 1.6; }
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
 
+        /* 版頭區塊：改為半透明白底漸層，透出隱約的背景圖 */
         header {
-            background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.9)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
-            padding: 100px 20px; text-align: center; border-bottom: 2px solid var(--hwc-gold);
+            background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.95)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+            padding: 80px 20px; text-align: center; border-bottom: 3px solid var(--hwc-gold);
         }
-        header h1 { font-size: 2.5rem; color: var(--hwc-gold); margin-bottom: 15px; letter-spacing: 2px; }
-        header p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; color: #dddddd; }
+        header h1 { font-size: 2.5rem; color: var(--text-main); margin-bottom: 15px; letter-spacing: 2px; }
+        header p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; color: var(--text-muted); }
 
         .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
-        .section-title { font-size: 1.8rem; color: var(--hwc-gold); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--hwc-border); display: flex; align-items: center; }
-        .section-title::before { content: ''; display: inline-block; width: 5px; height: 25px; background-color: var(--hwc-gold); margin-right: 15px; }
+        .section-title { font-size: 1.8rem; color: var(--text-main); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; font-weight: bold; }
+        .section-title::before { content: ''; display: inline-block; width: 6px; height: 24px; background-color: var(--hwc-gold); margin-right: 15px; border-radius: 3px; }
 
-        .interactive-card { background-color: var(--hwc-dark); border: 1px solid var(--hwc-border); border-radius: 8px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .interactive-card { background-color: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
         .form-group { margin-bottom: 30px; }
-        .form-group label.step-title { display: block; margin-bottom: 15px; font-size: 1.2rem; font-weight: bold; color: var(--hwc-gold); border-bottom: 1px dashed var(--hwc-border); padding-bottom: 5px; }
+        .form-group label.step-title { display: block; margin-bottom: 10px; font-size: 1.2rem; font-weight: bold; color: var(--hwc-gold-dark); border-bottom: 1px dashed var(--border-light); padding-bottom: 8px; }
+        .help-text { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
 
-        /* 數量輸入群組 */
-        .qty-group {
-            display: flex;
-            align-items: center;
-            max-width: 300px;
-            background-color: #222;
-            border: 1px solid var(--hwc-border);
-            border-radius: 4px;
-            overflow: hidden;
+        /* 獨立風味卡片網格 */
+        .flavor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
+        .flavor-card { 
+            background-color: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; 
+            padding: 20px 15px; transition: all 0.3s; display: flex; flex-direction: column; justify-content: space-between;
         }
-        .qty-btn {
-            background-color: #333;
-            color: var(--hwc-gold);
-            border: none;
-            padding: 12px 20px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            user-select: none; /* 防止連點反白 */
-        }
-        .qty-btn:hover { background-color: #444; }
-        .qty-btn:active { background-color: #111; }
+        /* 選中狀態樣式：白色中透出微金色的質感 */
+        .flavor-card.active { border-color: var(--hwc-gold); background-color: rgba(198, 156, 109, 0.05); box-shadow: 0 0 12px rgba(198, 156, 109, 0.15); }
         
-        input.qty-input {
-            flex: 1;
-            width: 100%;
-            padding: 12px 0;
-            background-color: transparent;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            text-align: center;
-        }
-        input.qty-input:focus { outline: none; }
-        
-        /* 快速選擇按鈕 */
-        .quick-btns {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        .q-btn {
-            background-color: #2a2a2a;
-            color: #ddd;
-            border: 1px solid #444;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-        .q-btn:hover, .q-btn:active {
-            border-color: var(--hwc-gold);
-            color: var(--hwc-gold);
-            background-color: rgba(198, 156, 109, 0.1);
-        }
+        .flavor-info h4 { color: var(--text-main); margin-bottom: 8px; font-size: 1.1rem; }
+        .flavor-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+        .f-tag { font-size: 0.75rem; background: var(--bg-subtle); color: var(--text-muted); padding: 3px 8px; border-radius: 4px; }
+        .flavor-card.active .f-tag { background: rgba(198, 156, 109, 0.15); color: var(--hwc-gold-dark); font-weight: bold; }
+        .f-notes { color: var(--hwc-gold-dark); font-size: 0.85rem; font-weight: 500; min-height: 40px; }
 
-        .help-text { font-size: 0.85rem; color: var(--hwc-gray); margin-top: 10px; }
+        /* 數量控制器 */
+        .flavor-qty-ctrl { margin-top: 15px; }
+        .qty-group { display: flex; align-items: center; background-color: var(--bg-card); border: 1px solid var(--border-light); border-radius: 6px; overflow: hidden; }
+        .flavor-card.active .qty-group { border-color: var(--hwc-gold); }
+        .qty-btn { background-color: var(--bg-subtle); color: var(--text-main); border: none; padding: 10px 15px; font-size: 1.2rem; cursor: pointer; user-select: none; width: 45px; transition: 0.2s; }
+        .qty-btn:hover { background-color: #e2e2e2; }
+        .qty-input { flex: 1; width: 100%; padding: 10px 0; background-color: transparent; border: none; color: var(--text-main); font-size: 1.2rem; text-align: center; font-weight: bold; }
+        .qty-input:focus { outline: none; }
 
-        .radio-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        /* 專屬快速按鈕 */
+        .flavor-quick-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+        .flavor-quick-btns .q-btn { background-color: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border-light); padding: 8px 0; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+        .flavor-quick-btns .q-btn:hover, .flavor-quick-btns .q-btn:active { border-color: var(--hwc-gold); color: var(--hwc-gold-dark); background-color: rgba(198, 156, 109, 0.1); font-weight: bold; }
+
+        /* 附加需求標籤 */
+        .checkbox-label { color: var(--text-main); font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+
+        /* 既有設計選項 */
+        .radio-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
         .radio-option { position: relative; }
         .radio-option input { display: none; }
-        .radio-label { display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 20px 15px; background-color: #222; border: 1px solid var(--hwc-border); border-radius: 6px; cursor: pointer; transition: all 0.3s; text-align: left; }
-        .radio-label h4 { color: #fff; margin-bottom: 8px; font-size: 1.05rem; }
-        .radio-label p { font-size: 0.85rem; color: var(--hwc-gray); margin-bottom: 5px; }
-        .radio-option input:checked + .radio-label { border-color: var(--hwc-gold); background-color: rgba(198, 156, 109, 0.1); box-shadow: 0 0 10px rgba(198, 156, 109, 0.2); }
+        .radio-label { display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 20px 15px; background-color: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; cursor: pointer; transition: all 0.3s; text-align: center; }
+        .radio-label h4 { color: var(--text-main); margin-bottom: 8px; font-size: 1.05rem; }
+        .radio-label p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
+        .radio-option input:checked + .radio-label { border-color: var(--hwc-gold); background-color: rgba(198, 156, 109, 0.05); box-shadow: 0 0 10px rgba(198, 156, 109, 0.15); }
 
-        .flavor-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
-        .f-tag { font-size: 0.7rem; background: #333; color: #ccc; padding: 2px 6px; border-radius: 3px; }
-        .f-notes { color: var(--hwc-gold); font-size: 0.8rem; margin-top: 8px; font-weight: 500; }
+        /* 計算結果表 */
+        .calculation-result { background: #fffcf9; border: 2px solid var(--hwc-gold); padding: 25px; border-radius: 10px; margin-top: 30px; }
+        .calc-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 1.1rem; color: var(--text-main); }
+        .breakdown-container { background: #ffffff; border: 1px solid var(--border-light); padding: 15px; border-radius: 8px; flex-direction: column; align-items: flex-start; }
+        .calc-row.total { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; font-size: 1.6rem; color: #a1703d; font-weight: bold; }
+        .notice-tag { font-size: 0.85rem; margin-left: 10px; font-weight: bold; transition: color 0.3s; }
+        .unit-price-tag { color: var(--text-muted); font-size: 0.9rem; font-weight: normal; }
 
-        .calculation-result { background: linear-gradient(135deg, #2a2a2a, #1a1a1a); border: 1px solid var(--hwc-gold); padding: 25px; border-radius: 8px; margin-top: 30px; }
-        .calc-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 1.1rem; }
-        .calc-row.highlight { color: #fff; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; }
-        .calc-row.total { margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--hwc-gray); font-size: 1.6rem; color: var(--hwc-gold); font-weight: bold; }
-        .free-tag { color: #4CAF50; font-size: 0.85rem; margin-left: 10px; }
-        .unit-price-tag { color: #aaa; font-size: 0.9rem; }
-
-        .info-list { list-style: none; }
+        .info-list { list-style: none; color: var(--text-main); }
         .info-list li { position: relative; padding-left: 25px; margin-bottom: 15px; }
-        .info-list li::before { content: '✓'; position: absolute; left: 0; color: var(--hwc-gold); font-weight: bold; }
+        .info-list li::before { content: '✓'; position: absolute; left: 0; color: var(--hwc-gold-dark); font-weight: bold; font-size: 1.2rem; line-height: 1.2; }
 
-        footer { text-align: center; padding: 40px 20px; background-color: #0a0a0a; border-top: 1px solid var(--hwc-border); margin-top: 50px; }
-        .cta-btn { background-color: var(--hwc-gold); color: var(--hwc-black); padding: 15px 40px; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 30px; cursor: pointer; transition: background-color 0.3s; margin-bottom: 20px; text-decoration: none; display: inline-block; }
-        .cta-btn:hover { background-color: var(--hwc-gold-hover); }
+        footer { text-align: center; padding: 40px 20px; background-color: #ffffff; border-top: 1px solid var(--border-light); margin-top: 50px; }
+        .cta-btn { background-color: var(--hwc-gold); color: #ffffff; padding: 15px 40px; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 30px; cursor: pointer; transition: background-color 0.3s; margin-bottom: 20px; text-decoration: none; display: inline-block; box-shadow: 0 4px 10px rgba(198, 156, 109, 0.3); }
+        .cta-btn:hover { background-color: var(--hwc-gold-dark); }
     </style>
 </head>
 <body>
@@ -133,156 +107,261 @@
         <div class="interactive-card">
             
             <div class="form-group">
-                <label class="step-title" for="order-qty">1. 訂購數量 (包)</label>
-                <div class="qty-group">
-                    <button type="button" class="qty-btn" id="btn-minus">－</button>
-                    <input type="text" inputmode="numeric" pattern="[0-9]*" id="order-qty" class="qty-input" value="5000">
-                    <button type="button" class="qty-btn" id="btn-plus">＋</button>
-                </div>
-                <div class="quick-btns">
-                    <button type="button" class="q-btn" data-val="1000">1,000包</button>
-                    <button type="button" class="q-btn" data-val="2000">2,000包</button>
-                    <button type="button" class="q-btn" data-val="3000">3,000包</button>
-                    <button type="button" class="q-btn" data-val="5000">5,000包</button>
-                    <button type="button" class="q-btn" data-val="10000">1萬包</button>
-                </div>
-                <p class="help-text">※ 可手動輸入或直接點選上方按鈕，系統將自動判斷報價級距與免設計費門檻。</p>
-            </div>
-
-            <div class="form-group">
-                <label class="step-title">2. 咖啡風味選擇</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" name="flavor-type" id="f-1" value="A" checked>
-                        <label class="radio-label" for="f-1">
-                            <h4>01 黑沃中深焦糖批次</h4>
+                <label class="step-title">1. 咖啡風味與訂購數量 (可多選)</label>
+                <p class="help-text">※ 點選下方按鈕或直接輸入，單一風味最低 500 包。各風味將依據其專屬訂購數量，獨立計算報價級距與單價。</p>
+                
+                <div class="flavor-grid">
+                    <div class="flavor-card active">
+                        <div class="flavor-info">
+                            <h4>01 黑沃中深焦糖</h4>
                             <div class="flavor-tags"><span class="f-tag">中深焙</span><span class="f-tag">水洗</span></div>
                             <div class="f-notes">巧克力.焦糖.果仁.奶油</div>
-                        </label>
+                        </div>
+                        <div class="flavor-qty-ctrl">
+                            <div class="qty-group">
+                                <button type="button" class="qty-btn btn-minus">－</button>
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="01 黑沃中深焦糖" data-group="A" value="500">
+                                <button type="button" class="qty-btn btn-plus">＋</button>
+                            </div>
+                            <div class="flavor-quick-btns">
+                                <button type="button" class="q-btn" data-val="500">500包</button>
+                                <button type="button" class="q-btn" data-val="1000">1,000包</button>
+                                <button type="button" class="q-btn" data-val="2000">2,000包</button>
+                                <button type="button" class="q-btn" data-val="3000">3,000包</button>
+                                <button type="button" class="q-btn" data-val="5000">5,000包</button>
+                                <button type="button" class="q-btn" data-val="10000">1萬包</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="flavor-type" id="f-2" value="A">
-                        <label class="radio-label" for="f-2">
-                            <h4>02 黑沃中深堅果批次</h4>
+
+                    <div class="flavor-card">
+                        <div class="flavor-info">
+                            <h4>02 黑沃中深堅果</h4>
                             <div class="flavor-tags"><span class="f-tag">中深焙</span><span class="f-tag">濕刨.日曬</span></div>
                             <div class="f-notes">巧克力.榛果.杏仁.香草</div>
-                        </label>
+                        </div>
+                        <div class="flavor-qty-ctrl">
+                            <div class="qty-group">
+                                <button type="button" class="qty-btn btn-minus">－</button>
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="02 黑沃中深堅果" data-group="A" value="0">
+                                <button type="button" class="qty-btn btn-plus">＋</button>
+                            </div>
+                            <div class="flavor-quick-btns">
+                                <button type="button" class="q-btn" data-val="500">500包</button>
+                                <button type="button" class="q-btn" data-val="1000">1,000包</button>
+                                <button type="button" class="q-btn" data-val="2000">2,000包</button>
+                                <button type="button" class="q-btn" data-val="3000">3,000包</button>
+                                <button type="button" class="q-btn" data-val="5000">5,000包</button>
+                                <button type="button" class="q-btn" data-val="10000">1萬包</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="flavor-type" id="f-3" value="A">
-                        <label class="radio-label" for="f-3">
-                            <h4>03 黑沃深焙可可批次</h4>
+
+                    <div class="flavor-card">
+                        <div class="flavor-info">
+                            <h4>03 黑沃深焙可可</h4>
                             <div class="flavor-tags"><span class="f-tag">深焙</span><span class="f-tag">日曬</span></div>
                             <div class="f-notes">黑巧克力.可可豆.奶油.香草</div>
-                        </label>
+                        </div>
+                        <div class="flavor-qty-ctrl">
+                            <div class="qty-group">
+                                <button type="button" class="qty-btn btn-minus">－</button>
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="03 黑沃深焙可可" data-group="A" value="0">
+                                <button type="button" class="qty-btn btn-plus">＋</button>
+                            </div>
+                            <div class="flavor-quick-btns">
+                                <button type="button" class="q-btn" data-val="500">500包</button>
+                                <button type="button" class="q-btn" data-val="1000">1,000包</button>
+                                <button type="button" class="q-btn" data-val="2000">2,000包</button>
+                                <button type="button" class="q-btn" data-val="3000">3,000包</button>
+                                <button type="button" class="q-btn" data-val="5000">5,000包</button>
+                                <button type="button" class="q-btn" data-val="10000">1萬包</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="flavor-type" id="f-4" value="A">
-                        <label class="radio-label" for="f-4">
-                            <h4>04 黑沃草莓批次</h4>
+
+                    <div class="flavor-card">
+                        <div class="flavor-info">
+                            <h4>04 黑沃草莓</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">水洗.特殊發酵</span></div>
                             <div class="f-notes">野草莓.葡萄.蘋果.紅櫻桃</div>
-                        </label>
+                        </div>
+                        <div class="flavor-qty-ctrl">
+                            <div class="qty-group">
+                                <button type="button" class="qty-btn btn-minus">－</button>
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="04 黑沃草莓" data-group="A" value="0">
+                                <button type="button" class="qty-btn btn-plus">＋</button>
+                            </div>
+                            <div class="flavor-quick-btns">
+                                <button type="button" class="q-btn" data-val="500">500包</button>
+                                <button type="button" class="q-btn" data-val="1000">1,000包</button>
+                                <button type="button" class="q-btn" data-val="2000">2,000包</button>
+                                <button type="button" class="q-btn" data-val="3000">3,000包</button>
+                                <button type="button" class="q-btn" data-val="5000">5,000包</button>
+                                <button type="button" class="q-btn" data-val="10000">1萬包</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="flavor-type" id="f-5" value="A">
-                        <label class="radio-label" for="f-5">
-                            <h4>05 黑沃水蜜桃批次</h4>
+
+                    <div class="flavor-card">
+                        <div class="flavor-info">
+                            <h4>05 黑沃水蜜桃</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬.特殊發酵</span></div>
                             <div class="f-notes">水蜜桃.杏桃.荔枝.無花果</div>
-                        </label>
+                        </div>
+                        <div class="flavor-qty-ctrl">
+                            <div class="qty-group">
+                                <button type="button" class="qty-btn btn-minus">－</button>
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="05 黑沃水蜜桃" data-group="A" value="0">
+                                <button type="button" class="qty-btn btn-plus">＋</button>
+                            </div>
+                            <div class="flavor-quick-btns">
+                                <button type="button" class="q-btn" data-val="500">500包</button>
+                                <button type="button" class="q-btn" data-val="1000">1,000包</button>
+                                <button type="button" class="q-btn" data-val="2000">2,000包</button>
+                                <button type="button" class="q-btn" data-val="3000">3,000包</button>
+                                <button type="button" class="q-btn" data-val="5000">5,000包</button>
+                                <button type="button" class="q-btn" data-val="10000">1萬包</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="flavor-type" id="f-6" value="A">
-                        <label class="radio-label" for="f-6">
-                            <h4>06 黑沃荔香批次</h4>
+
+                    <div class="flavor-card">
+                        <div class="flavor-info">
+                            <h4>06 黑沃荔香</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬.特殊發酵</span></div>
                             <div class="f-notes">荔枝.熱帶水果.檸檬.烏龍茶</div>
-                        </label>
+                        </div>
+                        <div class="flavor-qty-ctrl">
+                            <div class="qty-group">
+                                <button type="button" class="qty-btn btn-minus">－</button>
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="06 黑沃荔香" data-group="A" value="0">
+                                <button type="button" class="qty-btn btn-plus">＋</button>
+                            </div>
+                            <div class="flavor-quick-btns">
+                                <button type="button" class="q-btn" data-val="500">500包</button>
+                                <button type="button" class="q-btn" data-val="1000">1,000包</button>
+                                <button type="button" class="q-btn" data-val="2000">2,000包</button>
+                                <button type="button" class="q-btn" data-val="3000">3,000包</button>
+                                <button type="button" class="q-btn" data-val="5000">5,000包</button>
+                                <button type="button" class="q-btn" data-val="10000">1萬包</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="flavor-type" id="f-7" value="B">
-                        <label class="radio-label" for="f-7">
-                            <h4>07 黑沃花香批次</h4>
+
+                    <div class="flavor-card">
+                        <div class="flavor-info">
+                            <h4>07 黑沃花香</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬</span></div>
                             <div class="f-notes">茉莉花.甜檸檬.柑橘.熱帶水果</div>
-                        </label>
+                        </div>
+                        <div class="flavor-qty-ctrl">
+                            <div class="qty-group">
+                                <button type="button" class="qty-btn btn-minus">－</button>
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="07 黑沃花香" data-group="B" value="0">
+                                <button type="button" class="qty-btn btn-plus">＋</button>
+                            </div>
+                            <div class="flavor-quick-btns">
+                                <button type="button" class="q-btn" data-val="500">500包</button>
+                                <button type="button" class="q-btn" data-val="1000">1,000包</button>
+                                <button type="button" class="q-btn" data-val="2000">2,000包</button>
+                                <button type="button" class="q-btn" data-val="3000">3,000包</button>
+                                <button type="button" class="q-btn" data-val="5000">5,000包</button>
+                                <button type="button" class="q-btn" data-val="10000">1萬包</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="flavor-type" id="f-8" value="B">
-                        <label class="radio-label" for="f-8">
-                            <h4>08 黑沃酒香藝伎批次</h4>
+
+                    <div class="flavor-card">
+                        <div class="flavor-info">
+                            <h4>08 黑沃酒香藝伎</h4>
                             <div class="flavor-tags"><span class="f-tag">中焙</span><span class="f-tag">日曬.厭氧日曬</span></div>
                             <div class="f-notes">葡萄酒.櫻桃.覆盆子.巧克力</div>
-                        </label>
+                        </div>
+                        <div class="flavor-qty-ctrl">
+                            <div class="qty-group">
+                                <button type="button" class="qty-btn btn-minus">－</button>
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="08 黑沃酒香藝伎" data-group="B" value="0">
+                                <button type="button" class="qty-btn btn-plus">＋</button>
+                            </div>
+                            <div class="flavor-quick-btns">
+                                <button type="button" class="q-btn" data-val="500">500包</button>
+                                <button type="button" class="q-btn" data-val="1000">1,000包</button>
+                                <button type="button" class="q-btn" data-val="2000">2,000包</button>
+                                <button type="button" class="q-btn" data-val="3000">3,000包</button>
+                                <button type="button" class="q-btn" data-val="5000">5,000包</button>
+                                <button type="button" class="q-btn" data-val="10000">1萬包</button>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="step-title">3. 包裝及附加需求 (費用另計，請勾選備註)</label>
+                <label class="step-title">2. 包裝及附加需求 (費用另計，請勾選備註)</label>
                 <div style="display: flex; gap: 20px; margin-top: 10px;">
-                    <label style="color: white; font-weight: normal; cursor: pointer;"><input type="checkbox" id="need-box"> 需附禮盒與協助入盒</label>
-                    <label style="color: white; font-weight: normal; cursor: pointer;"><input type="checkbox" id="need-bag"> 需附提袋</label>
+                    <label class="checkbox-label"><input type="checkbox" id="need-box"> 需附禮盒與協助入盒</label>
+                    <label class="checkbox-label"><input type="checkbox" id="need-bag"> 需附提袋</label>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="step-title">4. 設計需求選擇</label>
-                <div class="radio-group" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <label class="step-title">3. 設計需求選擇</label>
+                <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" name="design-type" id="design-1" value="1" checked>
-                        <label class="radio-label" for="design-1" style="text-align: center;">
+                        <label class="radio-label" for="design-1">
                             <h4>買方提供設計檔</h4>
                             <p>黑沃協助套版與發包製作</p>
-                            <p style="color:var(--hwc-gold); margin-top:5px;">免工本費</p>
+                            <p style="color:var(--hwc-gold-dark); font-weight:bold; margin-top:5px;">免工本費</p>
                         </label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" name="design-type" id="design-2" value="2">
-                        <label class="radio-label" for="design-2" style="text-align: center;">
+                        <label class="radio-label" for="design-2">
                             <h4>買方提供散素材</h4>
                             <p>黑沃協助套版</p>
-                            <p style="color:var(--hwc-gold); margin-top:5px;">NT$500工本費 / 滿3千包免費</p>
+                            <p style="color:var(--hwc-gold-dark); font-weight:bold; margin-top:5px;">NT$500 / 總量滿3千包免費</p>
                         </label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" name="design-type" id="design-3" value="3">
-                        <label class="radio-label" for="design-3" style="text-align: center;">
+                        <label class="radio-label" for="design-3">
                             <h4>套用黑沃公版</h4>
                             <p>黑沃協助套版</p>
-                            <p style="color:var(--hwc-gold); margin-top:5px;">NT$200工本費 / 滿3千包免費</p>
+                            <p style="color:var(--hwc-gold-dark); font-weight:bold; margin-top:5px;">NT$200 / 總量滿3千包免費</p>
                         </label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" name="design-type" id="design-4" value="4">
-                        <label class="radio-label" for="design-4" style="text-align: center;">
+                        <label class="radio-label" for="design-4">
                             <h4>黑沃協助完整設計</h4>
                             <p>專屬設計與素材構思</p>
-                            <p style="color:var(--hwc-gold); margin-top:5px;">NT$1,000設計費 / 滿1萬包免費</p>
+                            <p style="color:var(--hwc-gold-dark); font-weight:bold; margin-top:5px;">NT$1,000 / 總量滿1萬包免費</p>
                         </label>
                     </div>
                 </div>
-                <p class="help-text" style="margin-top: 10px;">※若選擇完整設計，無提供改稿；若需改稿，每次酌收NT$500。</p>
+                <p class="help-text" style="margin-top: 10px;">※提供免費改稿一次，若需再次改稿，每次酌收NT$500。</p>
             </div>
 
             <div class="calculation-result">
-                <h3 style="margin-bottom: 15px; color: var(--hwc-gold);">總費用試算預估</h3>
-                <div class="calc-row highlight">
-                    <span>咖啡本體 <span class="unit-price-tag" id="coffee-detail">(@$18 x 5000包)</span></span>
-                    <span id="coffee-total-display">NT$ 90,000</span>
-                </div>
-                <div class="calc-row">
+                <h3 style="margin-bottom: 15px; color: var(--hwc-gold-dark); font-weight: bold;">總費用試算預估</h3>
+                
+                <div class="calc-row breakdown-container" id="coffee-breakdown-container">
+                    </div>
+                
+                <div class="calc-row" style="margin-top: 20px;">
                     <span>基本版費 (發包廠商)</span>
-                    <span>NT$ 1,000</span>
+                    <span id="plate-fee-display">NT$ 1,000</span>
                 </div>
                 <div class="calc-row">
-                    <span>設計/工本費 <span id="free-notice" class="free-tag"></span></span>
+                    <span>設計/工本費 <span id="free-notice" class="notice-tag"></span></span>
                     <span id="design-fee-display">NT$ 0</span>
                 </div>
                 <div class="calc-row total">
                     <span>預估總計</span>
-                    <span id="total-fee-display">NT$ 91,000</span>
+                    <span id="total-fee-display">NT$ 0</span>
                 </div>
                 <p class="help-text" style="text-align: right; margin-top: 10px;">
                     * 此為線上初步估算，實際總價含運費、禮盒/提袋附加需求等，將由專員為您正式報價。
@@ -305,8 +384,8 @@
     </div>
 
     <footer>
-        <h2 style="color: var(--hwc-gold); margin-bottom: 20px;">打造專屬的咖啡體驗</h2>
-        <p style="max-width: 600px; margin: 0 auto 30px; color: #aaa;">
+        <h2 style="color: var(--hwc-gold-dark); margin-bottom: 20px;">打造專屬的咖啡體驗</h2>
+        <p style="max-width: 600px; margin: 0 auto 30px; color: var(--text-muted);">
             選擇黑沃咖啡的客製化掛耳包，特別適合企業送禮、節慶禮盒、活動伴手禮。<br>
             黑沃專業設計團隊將協助您精準傳達創意與價值，讓品牌理念深入人心。
         </p>
@@ -315,99 +394,205 @@
     </footer>
 
     <script>
-        const qtyInput = document.getElementById('order-qty');
-        const btnMinus = document.getElementById('btn-minus');
-        const btnPlus = document.getElementById('btn-plus');
-        const quickBtns = document.querySelectorAll('.q-btn');
-        
-        const flavorOptions = document.getElementsByName('flavor-type');
+        // 取得所有風味輸入框與控制按鈕
+        const flavorInputs = document.querySelectorAll('.f-qty');
         const designOptions = document.getElementsByName('design-type');
         
-        const coffeeDetailDisplay = document.getElementById('coffee-detail');
-        const coffeeTotalDisplay = document.getElementById('coffee-total-display');
-        const designFeeDisplay = document.getElementById('design-fee-display');
-        const totalFeeDisplay = document.getElementById('total-fee-display');
-        const freeNotice = document.getElementById('free-notice');
-
-        // 確保輸入只有數字
-        qtyInput.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '');
-            calculateFees();
-        });
-
-        // 按鈕加減功能 (每次增減 100)
-        btnMinus.addEventListener('click', () => {
-            let current = parseInt(qtyInput.value) || 0;
-            if (current > 100) { qtyInput.value = current - 100; }
-            else { qtyInput.value = 1; }
-            calculateFees();
-        });
-
-        btnPlus.addEventListener('click', () => {
-            let current = parseInt(qtyInput.value) || 0;
-            qtyInput.value = current + 100;
-            calculateFees();
-        });
-
-        // 快速選擇按鈕功能
-        quickBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                qtyInput.value = btn.getAttribute('data-val');
+        // 確保手動輸入只有數字，且限制最低 500 包
+        flavorInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                updateActiveState(this);
+                calculateFees();
+            });
+            input.addEventListener('change', function() {
+                let val = parseInt(this.value) || 0;
+                // 若輸入大於0但不滿500，強制調整為最低門檻 500
+                if (val > 0 && val < 500) { val = 500; }
+                this.value = val;
+                updateActiveState(this);
                 calculateFees();
             });
         });
 
-        function calculateFees() {
-            let qty = parseInt(qtyInput.value) || 0;
-            if (qty < 1) qty = 1; 
+        // 綁定所有 減號 按鈕
+        document.querySelectorAll('.btn-minus').forEach(btn => {
+            btn.addEventListener('click', function() {
+                let input = this.nextElementSibling;
+                let val = parseInt(input.value) || 0;
+                // 若小於等於500，再減就歸零；否則每次減100
+                if (val <= 500) { input.value = 0; }
+                else { input.value = val - 100; }
+                updateActiveState(input);
+                calculateFees();
+            });
+        });
 
-            let flavorGroup = 'A';
-            for (const option of flavorOptions) {
-                if (option.checked) { flavorGroup = option.value; break; }
+        // 綁定所有 加號 按鈕
+        document.querySelectorAll('.btn-plus').forEach(btn => {
+            btn.addEventListener('click', function() {
+                let input = this.previousElementSibling;
+                let val = parseInt(input.value) || 0;
+                // 若為0，加號直接跳最低門檻 500；否則每次加100
+                if (val === 0) { input.value = 500; }
+                else { input.value = val + 100; }
+                updateActiveState(input);
+                calculateFees();
+            });
+        });
+
+        // 綁定所有 快速選擇 按鈕
+        document.querySelectorAll('.q-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                let input = this.closest('.flavor-qty-ctrl').querySelector('.f-qty');
+                input.value = this.getAttribute('data-val');
+                updateActiveState(input);
+                calculateFees();
+            });
+        });
+
+        // 更新卡片選中狀態的視覺回饋
+        function updateActiveState(input) {
+            let card = input.closest('.flavor-card');
+            if ((parseInt(input.value) || 0) > 0) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        }
+
+        // 核心計算邏輯
+        function calculateFees() {
+            let totalQty = 0;
+            let selectedFlavors = [];
+
+            // 統計所有選擇的風味與數量
+            flavorInputs.forEach(input => {
+                let qty = parseInt(input.value) || 0;
+                if (qty > 0) {
+                    totalQty += qty;
+                    selectedFlavors.push({
+                        name: input.getAttribute('data-name'),
+                        group: input.getAttribute('data-group'),
+                        qty: qty
+                    });
+                }
+            });
+
+            let coffeeTotal = 0;
+            let breakdownHTML = '';
+
+            // 生成咖啡明細表 (白底適配版文字顏色)
+            if (selectedFlavors.length > 0) {
+                breakdownHTML += `<div style="font-weight: bold; margin-bottom: 12px; color: var(--text-main);">咖啡明細：</div>`;
+                
+                selectedFlavors.forEach(f => {
+                    let unitPrice = 0;
+                    if (f.qty < 1000) { unitPrice = (f.group === 'B') ? 40 : 35; } 
+                    else if (f.qty < 2000) { unitPrice = (f.group === 'B') ? 30 : 25; } 
+                    else if (f.qty < 5000) { unitPrice = (f.group === 'B') ? 25 : 20; } 
+                    else if (f.qty < 10000) { unitPrice = (f.group === 'B') ? 23 : 18; } 
+                    else { unitPrice = (f.group === 'B') ? 20 : 16; }
+
+                    let subtotal = unitPrice * f.qty;
+                    coffeeTotal += subtotal;
+
+                    breakdownHTML += `
+                        <div style="display: flex; justify-content: space-between; width: 100%; font-size: 0.95rem; margin-bottom: 8px; color: var(--text-main);">
+                            <span>- ${f.name} <span class="unit-price-tag">(@$${unitPrice} x ${f.qty.toLocaleString()} 包)</span></span>
+                            <span>NT$ ${subtotal.toLocaleString()}</span>
+                        </div>
+                    `;
+                });
+
+                breakdownHTML += `
+                    <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 10px; border-top: 1px solid #ccc; padding-top: 10px; font-weight: bold; color: var(--text-main); font-size: 1.1rem;">
+                        <span>咖啡小計 <span class="unit-price-tag" style="color:var(--hwc-gold-dark); font-weight:bold;">(共 ${totalQty.toLocaleString()} 包)</span></span>
+                        <span>NT$ ${coffeeTotal.toLocaleString()}</span>
+                    </div>
+                `;
+            } else {
+                // 若全部歸零
+                breakdownHTML = `
+                    <div style="display: flex; justify-content: space-between; width: 100%; color: var(--text-muted);">
+                        <span>尚未選擇任何風味 (單一風味最低 500 包)</span>
+                        <span>NT$ 0</span>
+                    </div>
+                `;
             }
 
-            let unitPrice = 0;
-            if (qty < 1000) { unitPrice = (flavorGroup === 'B') ? 40 : 35; } 
-            else if (qty < 2000) { unitPrice = (flavorGroup === 'B') ? 30 : 25; } 
-            else if (qty < 5000) { unitPrice = (flavorGroup === 'B') ? 25 : 20; } 
-            else if (qty < 10000) { unitPrice = (flavorGroup === 'B') ? 23 : 18; } 
-            else { unitPrice = (flavorGroup === 'B') ? 20 : 16; }
+            document.getElementById('coffee-breakdown-container').innerHTML = breakdownHTML;
 
-            let coffeeTotal = unitPrice * qty;
-
+            // 計算設計工本費 (使用全部加總數量判斷免設計費門檻)
             let selectedDesign = 1;
             for (const option of designOptions) {
                 if (option.checked) { selectedDesign = parseInt(option.value); break; }
             }
 
-            const basePlateFee = 1000;
+            const basePlateFee = (totalQty > 0) ? 1000 : 0; 
             let designFee = 0;
-            let isFree = false;
+            
+            let noticeText = "";
+            let noticeColor = "";
 
-            switch (selectedDesign) {
-                case 1: designFee = 0; break;
-                case 2: 
-                    if (qty >= 3000) { designFee = 0; isFree = true; } else { designFee = 500; } break;
-                case 3: 
-                    if (qty >= 3000) { designFee = 0; isFree = true; } else { designFee = 200; } break;
-                case 4: 
-                    if (qty >= 10000) { designFee = 0; isFree = true; } else { designFee = 1000; } break;
+            if (totalQty > 0) {
+                switch (selectedDesign) {
+                    case 1: 
+                        designFee = 0; 
+                        break;
+                    case 2: 
+                        if (totalQty >= 3000) { 
+                            designFee = 0; 
+                            noticeText = "(總量已達門檻，享免工本費優惠！)";
+                            noticeColor = "#4CAF50"; // 綠色達標
+                        } else { 
+                            designFee = 500; 
+                            noticeText = `(還差 ${(3000 - totalQty).toLocaleString()} 包 免工本費)`;
+                            noticeColor = "#e65100"; // 醒目的橘紅色提醒
+                        } 
+                        break;
+                    case 3: 
+                        if (totalQty >= 3000) { 
+                            designFee = 0; 
+                            noticeText = "(總量已達門檻，享免工本費優惠！)";
+                            noticeColor = "#4CAF50";
+                        } else { 
+                            designFee = 200; 
+                            noticeText = `(還差 ${(3000 - totalQty).toLocaleString()} 包 免工本費)`;
+                            noticeColor = "#e65100";
+                        } 
+                        break;
+                    case 4: 
+                        if (totalQty >= 10000) { 
+                            designFee = 0; 
+                            noticeText = "(總量已達門檻，享免設計費優惠！)";
+                            noticeColor = "#4CAF50";
+                        } else { 
+                            designFee = 1000; 
+                            noticeText = `(還差 ${(10000 - totalQty).toLocaleString()} 包 免設計費)`;
+                            noticeColor = "#e65100";
+                        } 
+                        break;
+                }
             }
 
+            // 加總總額
             let finalTotal = coffeeTotal + basePlateFee + designFee;
 
-            coffeeDetailDisplay.textContent = `(@$${unitPrice} x ${qty}包)`;
-            coffeeTotalDisplay.textContent = `NT$ ${coffeeTotal.toLocaleString()}`;
-            designFeeDisplay.textContent = `NT$ ${designFee.toLocaleString()}`;
-            totalFeeDisplay.textContent = `NT$ ${finalTotal.toLocaleString()}`;
+            document.getElementById('plate-fee-display').textContent = `NT$ ${basePlateFee.toLocaleString()}`;
+            document.getElementById('design-fee-display').textContent = `NT$ ${designFee.toLocaleString()}`;
+            document.getElementById('total-fee-display').textContent = `NT$ ${finalTotal.toLocaleString()}`;
             
-            if (isFree) { freeNotice.textContent = "(已達數量，享免設計/工本費優惠！)"; } 
-            else { freeNotice.textContent = ""; }
+            // 更新提示字樣與顏色
+            const freeNotice = document.getElementById('free-notice');
+            freeNotice.textContent = noticeText;
+            freeNotice.style.color = noticeColor;
         }
 
-        flavorOptions.forEach(option => option.addEventListener('change', calculateFees));
+        // 綁定設計選項變更事件
         designOptions.forEach(option => option.addEventListener('change', calculateFees));
 
+        // 初始執行一次試算
         calculateFees();
     </script>
 </body>
