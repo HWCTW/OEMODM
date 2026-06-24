@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -8,13 +9,13 @@
         /* CSS 變數：高質感白底明亮風格 */
         :root {
             --hwc-gold: #c69c6d;
-            --hwc-gold-dark: #b38959;
-            --bg-body: #f8f9fa;
-            --bg-card: #ffffff;
-            --text-main: #222222;
-            --text-muted: #666666;
-            --border-light: #e0e0e0;
-            --bg-subtle: #f0f0f0;
+            --hwc-gold-dark: #b38959; 
+            --bg-body: #f8f9fa; 
+            --bg-card: #ffffff; 
+            --text-main: #222222; 
+            --text-muted: #666666; 
+            --border-light: #e0e0e0; 
+            --bg-subtle: #f0f0f0; 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
@@ -22,12 +23,85 @@
 
         header {
             background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.95)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
-            padding: 80px 20px; text-align: center; border-bottom: 3px solid var(--hwc-gold);
+            padding: 80px 20px 40px; text-align: center; border-bottom: 3px solid var(--hwc-gold);
+            position: relative;
+            z-index: 10;
         }
         header h1 { font-size: 2.5rem; color: var(--text-main); margin-bottom: 15px; letter-spacing: 2px; }
         header p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; color: var(--text-muted); }
 
-        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        /* --- 合作夥伴跑馬燈 --- */
+        .collab-section {
+            margin-top: 50px;
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px 0;
+            /* 💡 移除 overflow: hidden 以允許 Hover 放大時圖示溢出邊界 */
+        }
+        .collab-title {
+            color: var(--hwc-gold-dark);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .marquee-container {
+            display: flex;
+            /* 💡 邊緣淡出效果，這裡的 hidden 只藏住左右，上下允許突出 */
+            overflow-x: hidden;
+            overflow-y: visible; 
+            user-select: none;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            padding: 15px 0; /* 給予上下足夠的放大空間 */
+        }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: scroll 35s linear infinite;
+        }
+        .marquee-container:hover .marquee-track {
+            animation-play-state: paused;
+        }
+        .marquee-item {
+            flex-shrink: 0;
+            width: 160px;
+            height: 200px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            margin: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            cursor: pointer;
+            position: relative; /* 為 z-index 做準備 */
+            z-index: 1;
+        }
+        .marquee-item:hover {
+            transform: translateY(-8px) scale(1.15); /* 放大比例 */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            border-color: var(--hwc-gold);
+            z-index: 999; /* 💡 確保放大時浮在最上層，不被其他元素遮擋 */
+        }
+        .marquee-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            mix-blend-mode: multiply; 
+        }
+        @keyframes scroll {
+            to { transform: translateX(-50%); }
+        }
+        /* --------------------- */
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; position: relative; z-index: 5; }
         .section-title { font-size: 1.8rem; color: var(--text-main); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; font-weight: bold; }
         .section-title::before { content: ''; display: inline-block; width: 6px; height: 24px; background-color: var(--hwc-gold); margin-right: 15px; border-radius: 3px; }
 
@@ -36,7 +110,6 @@
         .form-group label.step-title { display: block; margin-bottom: 10px; font-size: 1.2rem; font-weight: bold; color: var(--hwc-gold-dark); border-bottom: 1px dashed var(--border-light); padding-bottom: 8px; }
         .help-text { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
 
-        /* 獨立風味卡片網格 */
         .flavor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
         .flavor-card { 
             background-color: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; 
@@ -49,14 +122,12 @@
         .f-tag { font-size: 0.75rem; background: var(--bg-subtle); color: var(--text-muted); padding: 3px 8px; border-radius: 4px; }
         .flavor-card.active .f-tag { background: rgba(198, 156, 109, 0.15); color: var(--hwc-gold-dark); font-weight: bold; }
         
-        /* 產地與風味描述樣式 */
         .f-details { font-size: 0.85rem; line-height: 1.5; margin-top: 5px; }
         .f-details .f-row { margin-bottom: 4px; display: flex; }
         .f-details .f-label { color: var(--text-main); font-weight: bold; flex-shrink: 0; }
         .f-details .f-origin { color: var(--text-muted); }
         .f-details .f-notes { color: var(--hwc-gold-dark); font-weight: 500; }
 
-        /* 數量控制器 */
         .flavor-qty-ctrl { margin-top: 15px; }
         .qty-group { display: flex; align-items: center; background-color: var(--bg-card); border: 1px solid var(--border-light); border-radius: 6px; overflow: hidden; }
         .flavor-card.active .qty-group { border-color: var(--hwc-gold); }
@@ -90,9 +161,41 @@
         .info-list li { position: relative; padding-left: 25px; margin-bottom: 15px; }
         .info-list li::before { content: '✓'; position: absolute; left: 0; color: var(--hwc-gold-dark); font-weight: bold; font-size: 1.2rem; line-height: 1.2; }
 
-        footer { text-align: center; padding: 40px 20px; background-color: #ffffff; border-top: 1px solid var(--border-light); margin-top: 50px; }
-        .cta-btn { background-color: var(--hwc-gold); color: #ffffff; padding: 15px 40px; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 30px; cursor: pointer; transition: background-color 0.3s; margin-bottom: 20px; text-decoration: none; display: inline-block; box-shadow: 0 4px 10px rgba(198, 156, 109, 0.3); }
-        .cta-btn:hover { background-color: var(--hwc-gold-dark); }
+        footer { 
+            background-color: #ffffff; 
+            border-top: 1px solid var(--border-light); 
+            margin-top: 50px; 
+            padding: 60px 20px 20px; 
+        }
+        .footer-layout {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .footer-image { flex: 1; max-width: 50%; }
+        .footer-image img { width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); object-fit: cover; }
+        .footer-text { flex: 1; }
+        .footer-text p { margin-bottom: 15px; color: var(--text-muted); line-height: 1.8; font-size: 1.05rem; }
+
+        .scenario-container { display: flex; gap: 15px; margin: 25px 0; flex-wrap: wrap; }
+        .scenario-item { flex: 1; min-width: 90px; background-color: var(--bg-body); border: 1px solid var(--border-light); border-radius: 8px; padding: 15px 10px; text-align: center; transition: all 0.3s ease; }
+        .scenario-item:hover { border-color: var(--hwc-gold); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(198, 156, 109, 0.15); background-color: #fff; }
+        .scenario-icon { color: var(--hwc-gold-dark); margin-bottom: 8px; }
+        .scenario-icon svg { width: 32px; height: 32px; }
+        .scenario-text { font-size: 0.95rem; font-weight: bold; color: var(--text-main); }
+
+        .cta-btn { background-color: var(--hwc-gold); color: #ffffff; padding: 15px 40px; font-size: 1.1rem; font-weight: bold; border: none; border-radius: 30px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; box-shadow: 0 4px 10px rgba(198, 156, 109, 0.3); margin-top: 10px; }
+        .cta-btn:hover { background-color: var(--hwc-gold-dark); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(198, 156, 109, 0.4); }
+        .copyright-text { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--border-light); font-size: 0.85rem; color: #999; }
+
+        @media screen and (max-width: 768px) {
+            .footer-layout { flex-direction: column; text-align: center; gap: 25px; }
+            .footer-image { max-width: 90%; }
+            .footer-text { display: flex; flex-direction: column; align-items: center; }
+        }
     </style>
 </head>
 <body>
@@ -100,6 +203,35 @@
     <header>
         <h1>黑沃咖啡 HWC ROASTERS</h1>
         <p>專屬客製化掛耳咖啡設計，滿足品牌與個人化需求。<br>無論是獨特的風味組合，還是專屬包裝，讓每一個細節都展現您的專屬風格。</p>
+
+        <div class="collab-section">
+            <div class="collab-title">品牌合作</div> <div class="collab-title">— Brand Collaborations —</div>
+            <div class="marquee-container">
+                <div class="marquee-track">
+                    <div class="marquee-item"><img src="https://i.ibb.co/Nn3LqRXM/image.png" alt="黑沃客製化啟德" ></div>
+                    <div class="marquee-item"><img src="https://i.ibb.co/cSpNrC5V/Mitsubishi-XForce.png" alt="黑沃客製化Mitsubishi" ></div>
+                    <div class="marquee-item"><img src="https://i.ibb.co/dsHDMhnm/Mitsubishi-XForce-2.png" alt="黑沃客製化Mitsubishi XForce" ></div>
+                    <div class="marquee-item"><img src="https://i.ibb.co/PG601w8Z/BMW.png" alt="黑沃客製化BMW R11" ></div>
+                    <div class="marquee-item"><img src="https://i.ibb.co/ksTzgPLQ/MINI-CABRIO.png" alt="黑沃客製化MINI CABRIO" ></div>
+                    <div class="marquee-item"><img src="https://i.ibb.co/hxmzWQq7/UNIQLO.jpg" alt="黑沃客製化UNIQLO" ></div>
+                    <div class="marquee-item"><img src="https://i.ibb.co/pjL70K5F/image.png" alt="黑沃客製化中山醫學大學附設醫院" ></div>
+                    <div class="marquee-item"><img src="https://i.ibb.co/393SfxGf/Wagor-International-School.png" alt="黑沃客製化葳格國際學校 Wagor " ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="" alt="" ></div>
+                    <div class="marquee-item"><img src="https://i.ibb.co/LhC4qFfB/Tru-Heart.png" alt="黑沃客製化初心TruHeart" ></div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <div class="container">
@@ -113,7 +245,7 @@
                 <div class="flavor-grid">
                     <div class="flavor-card active">
                         <div class="flavor-info">
-                            <h4>01 黑沃中深焦糖</h4>
+                            <h4>01 黑沃中深焦糖批次</h4>
                             <div class="flavor-tags"><span class="f-tag">中深焙</span><span class="f-tag">水洗</span></div>
                             <div class="f-details">
                                 <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">哥倫比亞</span></div>
@@ -123,7 +255,7 @@
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="01 黑沃中深焦糖" data-group="A" value="500">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="01 黑沃中深焦糖批次" data-group="A" value="500">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -139,7 +271,7 @@
 
                     <div class="flavor-card">
                         <div class="flavor-info">
-                            <h4>02 黑沃中深堅果</h4>
+                            <h4>02 黑沃中深堅果批次</h4>
                             <div class="flavor-tags"><span class="f-tag">中深焙</span><span class="f-tag">濕刨.日曬</span></div>
                             <div class="f-details">
                                 <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">印尼.巴西</span></div>
@@ -149,7 +281,7 @@
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="02 黑沃中深堅果" data-group="A" value="0">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="02 黑沃中深堅果批次" data-group="A" value="0">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -165,7 +297,7 @@
 
                     <div class="flavor-card">
                         <div class="flavor-info">
-                            <h4>03 黑沃深焙可可</h4>
+                            <h4>03 黑沃深焙可可批次</h4>
                             <div class="flavor-tags"><span class="f-tag">深焙</span><span class="f-tag">日曬</span></div>
                             <div class="f-details">
                                 <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">衣索比亞</span></div>
@@ -175,7 +307,7 @@
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="03 黑沃深焙可可" data-group="A" value="0">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="03 黑沃深焙可可批次" data-group="A" value="0">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -191,7 +323,7 @@
 
                     <div class="flavor-card">
                         <div class="flavor-info">
-                            <h4>04 黑沃草莓</h4>
+                            <h4>04 黑沃草莓批次</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">水洗.特殊發酵</span></div>
                             <div class="f-details">
                                 <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">哥倫比亞.衣索比亞</span></div>
@@ -201,7 +333,7 @@
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="04 黑沃草莓" data-group="A" value="0">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="04 黑沃草莓批次" data-group="A" value="0">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -217,7 +349,7 @@
 
                     <div class="flavor-card">
                         <div class="flavor-info">
-                            <h4>05 黑沃水蜜桃</h4>
+                            <h4>05 黑沃水蜜桃批次</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬.特殊發酵</span></div>
                             <div class="f-details">
                                 <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">哥倫比亞.衣索比亞</span></div>
@@ -227,7 +359,7 @@
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="05 黑沃水蜜桃" data-group="A" value="0">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="05 黑沃水蜜桃批次" data-group="A" value="0">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -243,7 +375,7 @@
 
                     <div class="flavor-card">
                         <div class="flavor-info">
-                            <h4>06 黑沃花香</h4>
+                            <h4>06 黑沃花香批次</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬</span></div>
                             <div class="f-details">
                                 <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">衣索比亞</span></div>
@@ -253,7 +385,7 @@
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="06 黑沃花香" data-group="B" value="0">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="06 黑沃花香批次" data-group="B" value="0">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -269,7 +401,7 @@
 
                     <div class="flavor-card">
                         <div class="flavor-info">
-                            <h4>07 黑沃荔香</h4>
+                            <h4>07 黑沃荔香批次</h4>
                             <div class="flavor-tags"><span class="f-tag">中淺焙</span><span class="f-tag">日曬.特殊發酵</span></div>
                             <div class="f-details">
                                 <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">衣索比亞.哥倫比亞</span></div>
@@ -279,7 +411,7 @@
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="07 黑沃荔香" data-group="A" value="0">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="07 黑沃荔香批次" data-group="A" value="0">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -295,7 +427,7 @@
 
                     <div class="flavor-card">
                         <div class="flavor-info">
-                            <h4>08 黑沃酒香藝伎</h4>
+                            <h4>08 黑沃酒香藝伎批次</h4>
                             <div class="flavor-tags"><span class="f-tag">中焙</span><span class="f-tag">日曬.厭氧日曬</span></div>
                             <div class="f-details">
                                 <div class="f-row"><span class="f-label">產地｜</span><span class="f-origin">衣索比亞.薩爾瓦多</span></div>
@@ -305,7 +437,7 @@
                         <div class="flavor-qty-ctrl">
                             <div class="qty-group">
                                 <button type="button" class="qty-btn btn-minus">－</button>
-                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="08 黑沃酒香藝伎" data-group="B" value="0">
+                                <input type="text" inputmode="numeric" pattern="[0-9]*" class="qty-input f-qty" data-name="08 黑沃酒香藝伎批次" data-group="B" value="0">
                                 <button type="button" class="qty-btn btn-plus">＋</button>
                             </div>
                             <div class="flavor-quick-btns">
@@ -408,13 +540,56 @@
     </div>
 
     <footer>
-        <h2 style="color: var(--hwc-gold-dark); margin-bottom: 20px;">打造專屬的咖啡體驗</h2>
-        <p style="max-width: 600px; margin: 0 auto 30px; color: var(--text-muted);">
-            選擇黑沃咖啡的客製化掛耳包，特別適合企業送禮、節慶禮盒、活動伴手禮。<br>
-            黑沃專業設計團隊將協助您精準傳達創意與價值，讓品牌理念深入人心。
-        </p>
-        <a href="#" class="cta-btn" onclick="alert('此為展示按鈕，將連結至客服或LINE官方帳號。')">立即聯繫專員報價</a>
-        <p class="help-text" style="margin-top: 20px;">© 2026 HWC ROASTERS 黑沃咖啡版權所有</p>
+        <div class="footer-layout">
+            <div class="footer-image">
+                <img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="黑沃咖啡客製化禮盒">
+            </div>
+            <div class="footer-text">
+                <h2 style="color: var(--hwc-gold-dark); margin-bottom: 20px;">打造專屬的咖啡體驗</h2>
+                <p>選擇黑沃咖啡的客製化掛耳包，不僅能享受香醇的精品咖啡，更能展現品牌獨特魅力。</p>
+                
+                <p>無論是哪種場合，都能完美傳達您的心意：</p>
+                <div class="scenario-container">
+                    <div class="scenario-item">
+                        <div class="scenario-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <div class="scenario-text">企業送禮</div>
+                    </div>
+                    <div class="scenario-item">
+                        <div class="scenario-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                                <rect x="2" y="7" width="20" height="5"></rect>
+                                <line x1="12" y1="22" x2="12" y2="7"></line>
+                                <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                            </svg>
+                        </div>
+                        <div class="scenario-text">節慶禮盒</div>
+                    </div>
+                    <div class="scenario-item">
+                        <div class="scenario-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </div>
+                        <div class="scenario-text">活動伴手禮</div>
+                    </div>
+                </div>
+
+                <p>黑沃設計團隊具備專業經驗，提供多樣化的設計方案，確保每一款掛耳包都能讓品牌理念深入人心。</p>
+                <a href="#" class="cta-btn" onclick="alert('此為展示按鈕，將連結至客服或LINE官方帳號。')">立即聯繫專員報價</a>
+            </div>
+        </div>
+        <div class="copyright-text">
+            © 2026 HWC ROASTERS 黑沃咖啡版權所有
+        </div>
     </footer>
 
     <script>
@@ -604,5 +779,3 @@
 </body>
 </html>
 
-
-<iframe allowtransparency="true" frameborder="0" height="2000px" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals" src="https://www.surveycake.com/s/bezed" style="border:#ddd 1px solid;" width="100%"></iframe>
