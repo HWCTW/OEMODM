@@ -40,10 +40,19 @@
             margin-right: auto;
             padding: 0;
         }
-        /* 總標題：品牌合作 */
+        
+        /* 💡 優化：專屬漸層金屬風格字體 */
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #a67c52 0%, #eed2aa 40%, #c69c6d 60%, #a67c52 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
         .collab-main-title {
-            color: var(--text-main);
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: bold;
             margin-bottom: 5px;
             letter-spacing: 4px;
@@ -56,13 +65,11 @@
             text-transform: uppercase;
         }
 
-        /* 次標題：內層耳掛 / 外盒 */
         .collab-section {
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
         .collab-sub-title {
-            color: var(--hwc-gold-dark);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             margin-bottom: 5px;
             letter-spacing: 2px;
@@ -71,35 +78,36 @@
             color: var(--hwc-gold);
             font-size: 0.85rem;
             letter-spacing: 2px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-transform: uppercase;
         }
 
+        /* 💡 終極防遮擋魔術：超大 Padding 搭配負 Margin */
         .marquee-container {
             display: flex;
-            overflow-x: hidden;
-            overflow-y: visible; /* 允許 hover 放大突出 */
+            overflow: hidden; /* 安全隱藏捲軸 */
             user-select: none;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            padding: 20px 0;
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            padding: 100px 0; /* 給予上下高達 100px 的隱形安全空間 */
+            margin: -70px 0;  /* 把被撐開的空間往回拉，讓排版不鬆散 */
         }
         .marquee-track {
             display: flex;
             width: max-content;
             animation: scroll 35s linear infinite;
         }
-        /* 第二排外盒採用反向滾動，視覺更豐富 */
         .marquee-track.reverse {
             animation-direction: reverse;
         }
         .marquee-container:hover .marquee-track {
             animation-play-state: paused;
         }
+        
         .marquee-item {
             flex-shrink: 0;
-            width: 160px;
-            height: 200px;
+            min-width: 170px; /* 加大基礎寬度 */
+            height: 240px;    /* 加大基礎高度 */
             background-color: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: 12px;
@@ -107,23 +115,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            padding: 15px;
+            /* 💡 Q彈的放大動畫 */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s, border-color 0.4s;
             cursor: pointer;
             position: relative;
             z-index: 1;
         }
         .marquee-item:hover {
-            transform: translateY(-8px) scale(1.15);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            /* 💡 震撼的 1.7 倍放大 (絕對有螢幕的1/4大)，並且浮在最上層 */
+            transform: translateY(-10px) scale(1.7);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
             border-color: var(--hwc-gold);
-            z-index: 999;
+            z-index: 9999; 
         }
+        
+        /* 💡 圖片不變形/不壓扁設定 */
         .marquee-item img {
+            width: auto;
+            height: auto;
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain;
-            mix-blend-mode: multiply; /* CSS自動去背融合 */
+            object-fit: contain; /* 保證等比例縮放 */
+            mix-blend-mode: multiply; /* 自動融合白底 */
         }
         @keyframes scroll {
             to { transform: translateX(-50%); }
@@ -230,55 +244,62 @@
 <body>
 
     <header>
-        <h1>黑沃咖啡 HWC ROASTERS</h1>
+        <h1>黑沃咖啡 HWC COFFEE</h1>
         <p>專屬客製化掛耳咖啡設計，滿足品牌與個人化需求。<br>無論是獨特的風味組合，還是專屬包裝，讓每一個細節都展現您的專屬風格。</p>
 
-        <!-- 全新品牌合作展示區塊 -->
         <div class="collab-wrapper">
-            <!-- 總標題 -->
-            <div class="collab-main-title">品牌合作</div>
+            <div class="collab-main-title text-gradient-gold">品牌合作</div>
             <div class="collab-main-subtitle">— Brand Collaborations —</div>
 
-            <!-- 第一區：內層耳掛 -->
             <div class="collab-section">
-                <div class="collab-sub-title">內層耳掛</div>
+                <div class="collab-sub-title text-gradient-gold">內層耳掛</div>
                 <div class="collab-sub-subtitle">— Drip Bag Coffee —</div>
                 <div class="marquee-container">
                     <div class="marquee-track">
-                        <!-- 第一組圖片 -->
                         <div class="marquee-item"><img src="https://i.ibb.co/Nn3LqRXM/image.png" alt="黑沃客製化啟德"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/cSpNrC5V/Mitsubishi-XForce.png" alt="黑沃客製化Mitsubishi"></div>
-                        <div class="marquee-item"><img src="https://i.ibb.co/hxmzWQq7/UNIQLO.jpg" alt="黑沃客製化UNIQLO"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/d4vK96v2/UNIQLO.png" alt="黑沃客製化UNIQLO"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/PG601w8Z/BMW.png" alt="黑沃客製化BMW R11"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/ksTzgPLQ/MINI-CABRIO.png" alt="黑沃客製化MINI CABRIO"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/393SfxGf/Wagor-International-School.png" alt="黑沃客製化葳格國際學校 Wagor"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/pjL70K5F/image.png" alt="黑沃客製化中山醫學大學附設醫院"></div>
-						<div class="marquee-item"><img src="https://i.ibb.co/dsHDMhnm/Mitsubishi-XForce-2.png" alt="黑沃客製化Mitsubishi XForce"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/dsHDMhnm/Mitsubishi-XForce-2.png" alt="黑沃客製化Mitsubishi XForce"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/xq5Kc8bh/image.png" alt="黑沃客製化東海大學"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/LhC4qFfB/Tru-Heart.png" alt="黑沃客製化初心TruHeart"></div>
+
+                        <div class="marquee-item"><img src="https://i.ibb.co/Nn3LqRXM/image.png" alt="黑沃客製化啟德"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/cSpNrC5V/Mitsubishi-XForce.png" alt="黑沃客製化Mitsubishi"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/d4vK96v2/UNIQLO.png" alt="黑沃客製化UNIQLO"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/PG601w8Z/BMW.png" alt="黑沃客製化BMW R11"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/ksTzgPLQ/MINI-CABRIO.png" alt="黑沃客製化MINI CABRIO"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/393SfxGf/Wagor-International-School.png" alt="黑沃客製化葳格國際學校 Wagor"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/pjL70K5F/image.png" alt="黑沃客製化中山醫學大學附設醫院"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/dsHDMhnm/Mitsubishi-XForce-2.png" alt="黑沃客製化Mitsubishi XForce"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/xq5Kc8bh/image.png" alt="黑沃客製化東海大學"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/LhC4qFfB/Tru-Heart.png" alt="黑沃客製化初心TruHeart"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 第二區：外盒 -->
             <div class="collab-section">
-                <div class="collab-sub-title">外盒</div>
+                <div class="collab-sub-title text-gradient-gold">外盒</div>
                 <div class="collab-sub-subtitle">— Outer Box —</div>
-                <!-- 外盒跑馬燈，設定 reverse 讓其反方向滾動更生動 -->
-                <div class="marquee-container" style="padding-bottom: 0;">
+                <div class="marquee-container">
                     <div class="marquee-track reverse">
-                        <!-- 第二組圖片 -->
                         <div class="marquee-item"><img src="https://i.ibb.co/WvPzBspT/image.png" alt="黑沃客製化台中燈會"></div>
-                        <div class="marquee-item"><img src="https://i.ibb.co/WvPzBspT/image.png" alt="黑沃客製化台中燈會"></div>
-                        <div class="marquee-item"><img src="https://i.ibb.co/WvPzBspT/image.png" alt="黑沃客製化台中燈會"></div>
-                        <div class="marquee-item"><img src="https://i.ibb.co/WvPzBspT/image.png" alt="黑沃客製化台中燈會"></div>
-                        <div class="marquee-item"><img src="https://i.ibb.co/WvPzBspT/image.png" alt="黑沃客製化台中燈會"></div>
-                        <div class="marquee-item"><img src="https://i.ibb.co/WvPzBspT/image.png" alt="黑沃客製化台中燈會"></div>
-                        <div class="marquee-item"><img src="https://i.ibb.co/FbGc2gk1/image.png" alt="黑沃客製化外交部ˇ"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/FbGc2gk1/image.png" alt="黑沃客製化外交部"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/j9zTzQGS/image.png" alt="黑沃客製化台中奉興宮"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/Z6wJXQ8c/image.png" alt="黑沃客製化財團法人鞋類暨運動休閒科技研發中心"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/hF7Z64Qx/image.png" alt="黑沃客製化啟德"></div>
                         <div class="marquee-item"><img src="https://i.ibb.co/35NpP1LN/image.png" alt="黑沃客製化創世基金會"></div>
-                        <div class="marquee-item"><img src="https://i.ibb.co/WvPzBspT/image.png" alt="黑沃客製化黑沃客製化台中燈會"></div>
+                        
+                        <div class="marquee-item"><img src="https://i.ibb.co/WvPzBspT/image.png" alt="黑沃客製化台中燈會"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/FbGc2gk1/image.png" alt="黑沃客製化外交部"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/j9zTzQGS/image.png" alt="黑沃客製化台中奉興宮"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/Z6wJXQ8c/image.png" alt="黑沃客製化財團法人鞋類暨運動休閒科技研發中心"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/hF7Z64Qx/image.png" alt="黑沃客製化啟德"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/35NpP1LN/image.png" alt="黑沃客製化創世基金會"></div>
+                        <div class="marquee-item"><img src="https://i.ibb.co/WvPzBspT/image.png" alt="黑沃客製化台中燈會"></div>
                     </div>
                 </div>
             </div>
@@ -590,11 +611,9 @@
         </div>
     </div>
 
-    <!-- 全新圖文並茂 Footer，加入三大應用情境 Icon -->
     <footer>
         <div class="footer-layout">
             <div class="footer-image">
-                <!-- 示意圖：高質感手沖咖啡與禮物元素 (您可隨時替換 src 圖片連結) -->
                 <img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="黑沃咖啡客製化禮盒">
             </div>
             <div class="footer-text">
@@ -603,7 +622,6 @@
                 
                 <p>無論是哪種場合，都能完美傳達您的心意：</p>
                 <div class="scenario-container">
-                    <!-- 企業送禮 (公事包 Icon) -->
                     <div class="scenario-item">
                         <div class="scenario-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -613,7 +631,6 @@
                         </div>
                         <div class="scenario-text">企業送禮</div>
                     </div>
-                    <!-- 節慶禮盒 (禮物盒 Icon) -->
                     <div class="scenario-item">
                         <div class="scenario-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -626,7 +643,6 @@
                         </div>
                         <div class="scenario-text">節慶禮盒</div>
                     </div>
-                    <!-- 活動伴手禮 (提袋 Icon) -->
                     <div class="scenario-item">
                         <div class="scenario-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -835,4 +851,3 @@
 </body>
 </html>
 
-<iframe allowtransparency="true" frameborder="0" height="2000px" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals" src="https://www.surveycake.com/s/bezed" style="border:#ddd 1px solid;" width="100%"></iframe>
